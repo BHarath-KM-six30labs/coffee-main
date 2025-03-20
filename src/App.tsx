@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 import { ProcurementForm } from "./pages/ProcurementForm";
-import { ProcurementList } from "./pages/ProcurementList";
+// import { ProcurementList } from "./pages/ProcurementList";
 import { ApprovalList } from "./pages/ApprovalList";
 import { ReceiverView } from "./pages/approval/ReceiverView";
 import { GraderView } from "./pages/approval/GraderView";
@@ -98,7 +98,7 @@ function App() {
                 element={
                   <>
                     <ProcurementForm />
-                    <ProcurementList onSelect={() => {}} />
+                    {/* <ProcurementList onSelect={() => {}} /> */}
                   </>
                 }
               />

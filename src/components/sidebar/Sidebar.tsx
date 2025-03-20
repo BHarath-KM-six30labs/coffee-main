@@ -7,7 +7,7 @@ import {
   Coffee,
   Eye,
   Package,
-  Settings,
+  // Settings,
   UserCheck,
   Warehouse,
 } from "lucide-react";
