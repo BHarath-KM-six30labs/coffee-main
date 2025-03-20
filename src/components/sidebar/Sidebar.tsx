@@ -8,6 +8,7 @@ import {
   Eye,
   Home,
   Package,
+  Sprout,
   // Settings,
   UserCheck,
   Warehouse,
@@ -43,7 +44,18 @@ function Sidebar({
         { icon: ClipboardCheck, label: "Approver", value: "approver" },
       ],
     },
-    { icon: Warehouse, label: "Inventory", value: "inventory" },
+    {
+      icon: UserCheck,
+      label: "Production",
+      value: "production",
+      subItems: [
+        { icon: Sprout, label: "Process Flow", value: "process-flow" },
+        // { icon: Eye, label: "Grader", value: "grader" },
+        // { icon: UserCheck, label: "Witness", value: "witness" },
+        // { icon: ClipboardCheck, label: "Approver", value: "approver" },
+      ],
+    },
+    { icon: Warehouse, label: "Inventory", value: "inventory-management" },
     // { icon: Settings, label: "Settings", value: "settings" },
   ];
 
@@ -62,14 +74,21 @@ function Sidebar({
 
   return (
     <motion.div
-      className={`bg-[#4A2C2A] text-white transition-all duration-300 min-h-screen fixed left-0 top-0 `}
-      style={{ width: collapsed ? "4rem" : "16rem" }}
-      // initial={{ x: 0 }}
-      // animate={{ x: 0 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+  className={`bg-[#4A2C2A] text-white transition-all duration-300 min-h-screen fixed left-0 top-0 overflow-y-auto`}
+  style={{ width: collapsed ? "4rem" : "16rem" }}
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.5 }}
+>
+    {/* // <motion.div
+    //   className={`bg-[#4A2C2A] text-white transition-all duration-300 min-h-screen fixed left-0 top-0 `}
+    //   style={{ width: collapsed ? "4rem" : "16rem" }}
+    //   // initial={{ x: 0 }}
+    //   // animate={{ x: 0 }}
+    //   initial={{ opacity: 0 }}
+    //   animate={{ opacity: 1 }}
+    //   transition={{ duration: 0.5 }}
+    // > */}
       <div className="p-4 flex items-center justify-between">
         {/* <img
           alt={"logo"}

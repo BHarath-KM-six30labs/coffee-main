@@ -8,7 +8,7 @@ import { ReceiverView } from "./pages/approval/ReceiverView";
 import { GraderView } from "./pages/approval/GraderView";
 import { WitnessView } from "./pages/approval/WitnessView";
 import { ApproverView } from "./pages/approval/ApproverView";
-import { InventoryView } from "./pages/InventoryView";
+// import { InventoryView } from "./pages/InventoryView";
 // import { useProcurementStore } from "./store/procurementStore";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -18,6 +18,15 @@ import { Route, Link, Routes } from "react-router-dom";
 import Dashboard from "./pages/dashbord/Dashbord";
 import { Bell, User } from "lucide-react";
 import DashboardMain from "./pages/main/Dashbord";
+import Production from "./pages/production/Production";
+// import InventoryOverview from "./pages/production/InventoryOverview";
+// import StockOverview from "./pages/production/StockOverview";
+// import RawMaterials from "./pages/production/RawMaterials";
+// import StockAlerts from "./pages/production/StockAlerts";
+// import WastageTracking from "./pages/production/WastageTracking";
+// import PerformanceMetrics from "./pages/production/PerformanceMetrics";
+// import ERPIntegration from "./pages/production/ERPIntegration";
+import ProcessFlow from "./pages/process-flow/ProcessFlow";
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -55,20 +64,20 @@ function App() {
           transition={{ duration: 0.5 }}
         >
           <header className="bg-white shadow-sm">
-            <div className="flex items-center justify-between px-6 py-4">
-              <h1 className="text-2xl font-bold text-[#4A2C2A]">
+            <div className="flex items-center justify-end px-6 py-4">
+              {/* <h1 className="text-2xl font-bold text-[#4A2C2A]">
                 <Link to="/">HOME</Link>
-              </h1>
+              </h1> */}
               <div className="flex items-center space-x-4">
                 {/* <Link to="/procurement"> */}
-                  <button className="p-2 hover:bg-gray-100 rounded-full">
-                    <Bell/>
-                  </button>
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <Bell />
+                </button>
                 {/* </Link> */}
                 {/* <Link to="/receiver"> */}
-                  <button className="p-2 hover:bg-gray-100 rounded-full">
-                    <User/>
-                  </button>
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <User />
+                </button>
                 {/* </Link> */}
               </div>
             </div>
@@ -78,31 +87,9 @@ function App() {
             {/* <Switch> */}
 
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <DashboardMain />
-                  </>
-                }
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <>
-                    <Dashboard />
-                  </>
-                }
-              />
-              <Route
-                path="/procurement"
-                element={
-                  <>
-                    <ProcurementForm />
-                    {/* <ProcurementList onSelect={() => {}} /> */}
-                  </>
-                }
-              />
+              <Route path="/" element={<DashboardMain />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/procurement" element={<ProcurementForm />} />
               <Route path="/receiver" element={<ReceiverView />} />
               <Route path="/grader" element={<GraderView />} />
               <Route path="/witness" element={<WitnessView />} />
@@ -111,7 +98,8 @@ function App() {
                 path="/approve"
                 element={<ApprovalList onSelect={() => {}} />}
               />
-              <Route path="/inventory" element={<InventoryView />} />
+              <Route path="/inventory-management/*" element={<Production />} />
+              <Route path="/process-flow/*" element={<ProcessFlow />} />
             </Routes>
           </main>
         </motion.div>
