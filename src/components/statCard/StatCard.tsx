@@ -18,7 +18,7 @@ function StatCard({
   return (
     <AnimatePresence>
       <motion.div
-        className="bg-white rounded-lg p-6 shadow-md"
+        className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

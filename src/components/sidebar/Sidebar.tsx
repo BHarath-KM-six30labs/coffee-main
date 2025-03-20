@@ -6,6 +6,7 @@ import {
   ClipboardCheck,
   Coffee,
   Eye,
+  Home,
   Package,
   // Settings,
   UserCheck,
@@ -24,8 +25,11 @@ function Sidebar({
 }) {
   const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
   const navigate = useNavigate(); // Hook to navigate between pages
-
+  // const params = useParams()
+  // console.log(params)
+  const currentPath = window.location.pathname.split("/")[1]; // console.log(pathname,'pathname')
   const menuItems = [
+    { icon: Home, label: "Home", value: "" },
     { icon: Coffee, label: "Dashboard", value: "dashboard" },
     { icon: Package, label: "Procurement", value: "procurement" },
     {
@@ -58,7 +62,7 @@ function Sidebar({
 
   return (
     <motion.div
-      className={`bg-[#4A2C2A] text-white transition-all duration-300 min-h-screen fixed left-0 top-0`}
+      className={`bg-[#4A2C2A] text-white transition-all duration-300 min-h-screen fixed left-0 top-0 `}
       style={{ width: collapsed ? "4rem" : "16rem" }}
       // initial={{ x: 0 }}
       // animate={{ x: 0 }}
@@ -73,13 +77,20 @@ function Sidebar({
           
           className={`font-bold ${collapsed ? "hidden" : "block"} w-full h-full rotate-90`}
         ></img> */}
+        {/* <h1 className={`font-bold ${collapsed ? "hidden" : "block"} text-2xl `}>
+          coffeetrack UG
+        </h1> */}
         <h1
           className={`font-bold ${
             collapsed ? "hidden" : "block"
-          } text-2xl `}
+          } text-2xl transform transition ease-in-out duration-300`}
+          style={{
+            transform: collapsed ? "translateX(-100%)" : "translateX(0)",
+          }}
         >
           coffeetrack UG
         </h1>
+
         <button
           onClick={onCollapse}
           className="text-white p-2 rounded hover:bg-[#3a2220]"
@@ -102,7 +113,9 @@ function Sidebar({
           >
             <div className="flex flex-col">
               <button
-                className={`w-full flex items-center p-4 hover:bg-[#3a2220] transition-colors`}
+                className={`w-full flex items-center p-4 hover:bg-[#3a2220] transition-colors ${
+                  item.value.toLowerCase() === currentPath ? "bg-[#3a2220]" : ""
+                }`}
                 onClick={() => {
                   if (item.subItems) {
                     if (!collapsed) {
