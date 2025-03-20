@@ -17,6 +17,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { Route, Link, Routes } from "react-router-dom";
 import Dashboard from "./pages/dashbord/Dashbord";
 import { Bell, User } from "lucide-react";
+import DashboardMain from "./pages/main/Dashbord";
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -56,7 +57,7 @@ function App() {
           <header className="bg-white shadow-sm">
             <div className="flex items-center justify-between px-6 py-4">
               <h1 className="text-2xl font-bold text-[#4A2C2A]">
-                <Link to="/">Dashboard</Link>
+                <Link to="/">HOME</Link>
               </h1>
               <div className="flex items-center space-x-4">
                 <Link to="/procurement">
@@ -81,7 +82,7 @@ function App() {
                 path="/"
                 element={
                   <>
-                    <Dashboard />
+                    <DashboardMain />
                   </>
                 }
               />
