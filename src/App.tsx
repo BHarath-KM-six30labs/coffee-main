@@ -17,7 +17,8 @@ import {
   Scale,
   BarChart,
   PieChart,
-  Warehouse
+  Warehouse,
+  ChevronDown
 } from 'lucide-react';
 import { ProcurementForm } from './components/ProcurementForm';
 import { ProcurementList } from './components/ProcurementList';
@@ -133,7 +134,7 @@ function App() {
                 icon={DollarSign}
                 title="Total Processing Value"
                 value={totalCharges.toLocaleString()}
-                unit="KES"
+                unit="UGX"
                 change="All services"
                 color="bg-gradient-to-br from-green-500 to-green-600"
               />
@@ -260,12 +261,81 @@ function App() {
   );
 }
 
+// function Sidebar({ collapsed, onCollapse, onNavigate, currentView }: {
+//   collapsed: boolean;
+//   onCollapse: () => void;
+//   onNavigate: (view: string) => void;
+//   currentView: string;
+// }) {
+//   const menuItems = [
+//     { icon: Coffee, label: 'Dashboard', value: 'dashboard' },
+//     { icon: Package, label: 'Procurement', value: 'procurement' },
+//     { 
+//       icon: ClipboardCheck, 
+//       label: 'Approval Process', 
+//       value: 'approve',
+//       subItems: [
+//         { icon: CheckCircle2, label: 'Receiver', value: 'receiver' },
+//         { icon: Eye, label: 'Grader', value: 'grader' },
+//         { icon: UserCheck, label: 'Witness', value: 'witness' },
+//         { icon: ClipboardCheck, label: 'Approver', value: 'approver' }
+//       ]
+//     },
+//     { icon: Warehouse, label: 'Inventory', value: 'inventory' },
+//     { icon: Settings, label: 'Settings', value: 'settings' }
+//   ];
+
+//   return (
+//     <div className={`bg-[#4A2C2A] text-white transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} min-h-screen fixed left-0 top-0`}>
+//       <div className="p-4 flex items-center justify-between">
+//         <h1 className={`font-bold ${collapsed ? 'hidden' : 'block'}`}>Six30Labs</h1>
+//         <button onClick={onCollapse} className="text-white p-2 rounded hover:bg-[#3a2220]">
+//           <ChevronLeft className={`transform transition-transform ${collapsed ? 'rotate-180' : ''}`} />
+//         </button>
+//       </div>
+      
+//       <nav className="mt-8">
+//         {menuItems.map((item) => (
+//           <div key={item.value}>
+//             <button
+//               className={`w-full flex items-center p-4 hover:bg-[#3a2220] transition-colors ${
+//                 (currentView === item.value || (item.subItems?.some(sub => sub.value === currentView))) ? 'bg-[#3a2220]' : ''
+//               }`}
+//               onClick={() => onNavigate(item.value)}
+//             >
+//               <item.icon size={20} />
+//               <span className={`ml-4 ${collapsed ? 'hidden' : 'block'}`}>{item.label}</span>
+//             </button>
+//             {!collapsed && item.subItems && (
+//               <div className="pl-4 bg-[#3a2220]">
+//                 {item.subItems.map((subItem) => (
+//                   <button
+//                     key={subItem.value}
+//                     className={`w-full flex items-center p-3 hover:bg-[#2a1816] transition-colors ${
+//                       currentView === subItem.value ? 'bg-[#2a1816]' : ''
+//                     }`}
+//                     onClick={() => onNavigate(subItem.value)}
+//                   >
+//                     <subItem.icon size={16} />
+//                     <span className="ml-3 text-sm">{subItem.label}</span>
+//                   </button>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+//         ))}
+//       </nav>
+//     </div>
+//   );
+// }
 function Sidebar({ collapsed, onCollapse, onNavigate, currentView }: {
   collapsed: boolean;
   onCollapse: () => void;
   onNavigate: (view: string) => void;
   currentView: string;
 }) {
+  const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
+  
   const menuItems = [
     { icon: Coffee, label: 'Dashboard', value: 'dashboard' },
     { icon: Package, label: 'Procurement', value: 'procurement' },
@@ -284,6 +354,26 @@ function Sidebar({ collapsed, onCollapse, onNavigate, currentView }: {
     { icon: Settings, label: 'Settings', value: 'settings' }
   ];
 
+  const toggleSubmenu = (itemValue: string) => {
+    setExpandedItems(prev => 
+      prev.includes(itemValue) 
+        ? prev.filter(item => item !== itemValue)
+        : [...prev, itemValue]
+    );
+  };
+
+  // Check if a menu item should be expanded
+  const isExpanded = (itemValue: string) => {
+    return expandedItems.includes(itemValue);
+  };
+
+  // Check if a menu item or any of its subitems is active
+  const isActive = (item: any) => {
+    if (currentView === item.value) return true;
+    if (item.subItems?.some((sub: any) => sub.value === currentView)) return true;
+    return false;
+  };
+
   return (
     <div className={`bg-[#4A2C2A] text-white transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} min-h-screen fixed left-0 top-0`}>
       <div className="p-4 flex items-center justify-between">
@@ -296,31 +386,53 @@ function Sidebar({ collapsed, onCollapse, onNavigate, currentView }: {
       <nav className="mt-8">
         {menuItems.map((item) => (
           <div key={item.value}>
-            <button
-              className={`w-full flex items-center p-4 hover:bg-[#3a2220] transition-colors ${
-                (currentView === item.value || (item.subItems?.some(sub => sub.value === currentView))) ? 'bg-[#3a2220]' : ''
-              }`}
-              onClick={() => onNavigate(item.value)}
-            >
-              <item.icon size={20} />
-              <span className={`ml-4 ${collapsed ? 'hidden' : 'block'}`}>{item.label}</span>
-            </button>
-            {!collapsed && item.subItems && (
-              <div className="pl-4 bg-[#3a2220]">
-                {item.subItems.map((subItem) => (
-                  <button
-                    key={subItem.value}
-                    className={`w-full flex items-center p-3 hover:bg-[#2a1816] transition-colors ${
-                      currentView === subItem.value ? 'bg-[#2a1816]' : ''
-                    }`}
-                    onClick={() => onNavigate(subItem.value)}
-                  >
-                    <subItem.icon size={16} />
-                    <span className="ml-3 text-sm">{subItem.label}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-col">
+              <button
+                className={`w-full flex items-center p-4 hover:bg-[#3a2220] transition-colors ${
+                  isActive(item) ? 'bg-[#3a2220]' : ''
+                }`}
+                onClick={() => {
+                  if (item.subItems) {
+                    if (!collapsed) {
+                      toggleSubmenu(item.value);
+                    }
+                  } else {
+                    onNavigate(item.value);
+                  }
+                }}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center">
+                    <item.icon size={20} />
+                    <span className={`ml-4 ${collapsed ? 'hidden' : 'block'}`}>{item.label}</span>
+                  </div>
+                  {!collapsed && item.subItems && (
+                    <ChevronDown className={`transform transition-transform ${isExpanded(item.value) ? 'rotate-180' : ''}`} size={16} />
+                  )}
+                </div>
+              </button>
+              
+              {!collapsed && item.subItems && (
+                <div 
+                  className={`pl-4 bg-[#3a2220] overflow-hidden transition-all duration-300 ${
+                    isExpanded(item.value) ? 'max-h-60' : 'max-h-0'
+                  }`}
+                >
+                  {item.subItems.map((subItem) => (
+                    <button
+                      key={subItem.value}
+                      className={`w-full flex items-center p-3 hover:bg-[#2a1816] transition-colors ${
+                        currentView === subItem.value ? 'bg-[#2a1816]' : ''
+                      }`}
+                      onClick={() => onNavigate(subItem.value)}
+                    >
+                      <subItem.icon size={16} />
+                      <span className="ml-3 text-sm">{subItem.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </nav>
