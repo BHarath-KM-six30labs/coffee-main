@@ -1,4 +1,3 @@
-
 import { AnimatePresence, motion } from "framer-motion";
 
 import React from "react";
@@ -19,7 +18,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-//   Legend,
+  //   Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -160,218 +159,227 @@ const TableHeader = ({ children }: { children: React.ReactNode }) => (
 export default function DashboardMain() {
   return (
     <AnimatePresence>
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  bg-gray-50">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Supplier Performance Analytics
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Track and analyze supplier performance metrics
-          </p>
-        </div>
-        <button className="flex items-center px-4 py-2 bg-[#4A2C2A] text-white rounded-md hover:bg-[#4A2C2A] transition-colors">
-          <FileText className="h-4 w-4 mr-2" />
-          Download Report
-        </button>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        {stats.map((stat) => (
-          <StatCard key={stat.name} stat={stat} />
-        ))}
-      </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Quality Score Trends
-            </h3>
-            <BarChartIcon className="h-5 w-5 text-gray-400" />
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto     bg-gray-50">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Supplier Performance Analytics
+              </h1>
+              <p className="mt-1 text-sm text-gray-500">
+                Track and analyze supplier performance metrics
+              </p>
+            </div>
+            <button className="flex items-center px-4 py-2 bg-[#4A2C2A] text-white rounded-md hover:bg-[#4A2C2A] transition-colors">
+              <FileText className="h-4 w-4 mr-2" />
+              Download Report
+            </button>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart
-              data={qualityTrendData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="month" tick={{ fill: "#6b7280" }} />
-              <YAxis domain={[80, 100]} tick={{ fill: "#6b7280" }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                }}
-                formatter={(value) => [`${value}%`, "Quality Score"]}
-              />
-              <Line
-                type="monotone"
-                dataKey="score"
-                stroke="#8B4513"
-                strokeWidth={3}
-                dot={{ fill: "#8B4513", r: 4 }}
-                activeDot={{ r: 6, fill: "#8B4513" }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Delivery Performance
-            </h3>
-            <BarChartIcon className="h-5 w-5 text-gray-400" />
+          {/* Key Metrics */}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+            {stats.map((stat) => (
+              <StatCard key={stat.name} stat={stat} />
+            ))}
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={deliveryPerformanceData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="month" tick={{ fill: "#6b7280" }} />
-              <YAxis domain={[0, 100]} tick={{ fill: "#6b7280" }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                }}
-                formatter={(value) => [`${value}%`, "On-Time Deliveries"]}
-              />
-              <Bar
-                dataKey="percentage"
-                fill="#8B4513"
-                radius={[4, 4, 0, 0]}
-                barSize={30}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
 
-      {/* Top Suppliers Table */}
-      <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
-        <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Top Performing Suppliers
-          </h3>
-          <span className="text-sm text-gray-500">Showing top 5 suppliers</span>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <TableHeader>Supplier Name</TableHeader>
-                <TableHeader>Performance Score</TableHeader>
-                <TableHeader>Total Deliveries</TableHeader>
-                <TableHeader>Quality Rating</TableHeader>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {topSuppliers.map((supplier, idx) => (
-                <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {supplier.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    <div className="flex items-center">
-                      <span className="font-medium">{supplier.score}</span>
-                      <span className="text-gray-500">/100</span>
-                      <div className="ml-2 h-2 w-24 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600"
-                          style={{ width: `${supplier.score}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {supplier.deliveries}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        supplier.quality === "Excellent"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {supplier.quality}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          {/* Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Quality Score Trends
+                </h3>
+                <BarChartIcon className="h-5 w-5 text-gray-400" />
+              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart
+                  data={qualityTrendData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="month" tick={{ fill: "#6b7280" }} />
+                  <YAxis domain={[80, 100]} tick={{ fill: "#6b7280" }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    }}
+                    formatter={(value) => [`${value}%`, "Quality Score"]}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="score"
+                    stroke="#8B4513"
+                    strokeWidth={3}
+                    dot={{ fill: "#8B4513", r: 4 }}
+                    activeDot={{ r: 6, fill: "#8B4513" }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
 
-      {/* Recent Deliveries */}
-      <div className="bg-white shadow rounded-lg overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Recent Deliveries
-          </h3>
-          <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
-            View all
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <TableHeader>Supplier</TableHeader>
-                <TableHeader>Date</TableHeader>
-                <TableHeader>Quantity</TableHeader>
-                <TableHeader>Quality Score</TableHeader>
-                <TableHeader>Status</TableHeader>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentDeliveries.map((delivery, idx) => (
-                <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {delivery.supplier}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {delivery.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {delivery.quantity}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    <div className="flex items-center">
-                      <span>{delivery.quality}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        delivery.status === "Completed"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
+            <div className="bg-white p-6 rounded-lg shadow">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Delivery Performance
+                </h3>
+                <BarChartIcon className="h-5 w-5 text-gray-400" />
+              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={deliveryPerformanceData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="month" tick={{ fill: "#6b7280" }} />
+                  <YAxis domain={[0, 100]} tick={{ fill: "#6b7280" }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    }}
+                    formatter={(value) => [`${value}%`, "On-Time Deliveries"]}
+                  />
+                  <Bar
+                    dataKey="percentage"
+                    fill="#8B4513"
+                    radius={[4, 4, 0, 0]}
+                    barSize={30}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Top Suppliers Table */}
+          <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Top Performing Suppliers
+              </h3>
+              <span className="text-sm text-gray-500">
+                Showing top 5 suppliers
+              </span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <TableHeader>Supplier Name</TableHeader>
+                    <TableHeader>Performance Score</TableHeader>
+                    <TableHeader>Total Deliveries</TableHeader>
+                    <TableHeader>Quality Rating</TableHeader>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {topSuppliers.map((supplier, idx) => (
+                    <tr
+                      key={idx}
+                      className="hover:bg-gray-50 transition-colors"
                     >
-                      {delivery.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>  </motion.div>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {supplier.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        <div className="flex items-center">
+                          <span className="font-medium">{supplier.score}</span>
+                          <span className="text-gray-500">/100</span>
+                          <div className="ml-2 h-2 w-24 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600"
+                              style={{ width: `${supplier.score}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {supplier.deliveries}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            supplier.quality === "Excellent"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {supplier.quality}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Recent Deliveries */}
+          <div className="bg-white shadow rounded-lg overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Recent Deliveries
+              </h3>
+              <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                View all
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <TableHeader>Supplier</TableHeader>
+                    <TableHeader>Date</TableHeader>
+                    <TableHeader>Quantity</TableHeader>
+                    <TableHeader>Quality Score</TableHeader>
+                    <TableHeader>Status</TableHeader>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {recentDeliveries.map((delivery, idx) => (
+                    <tr
+                      key={idx}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {delivery.supplier}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {delivery.date}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {delivery.quantity}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        <div className="flex items-center">
+                          <span>{delivery.quality}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            delivery.status === "Completed"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {delivery.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>{" "}
+      </motion.div>
     </AnimatePresence>
   );
 }
