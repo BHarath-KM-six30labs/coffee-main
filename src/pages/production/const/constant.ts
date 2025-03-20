@@ -4,7 +4,7 @@ import {
   AlertTriangle,
   // TrendingDown,
   BarChart2,
-  // Database,
+  Database,
   Home,
 } from "lucide-react";
 
@@ -15,5 +15,5 @@ export const subMenuItems = [
   { name: "Stock Alerts", icon: AlertTriangle, path: "alerts" },
   // { name: "Wastage Tracking", icon: TrendingDown, path: "wastage" },
   { name: "Performance", icon: BarChart2, path: "performance" },
-  // { name: "ERP Integration", icon: Database, path: "integration" },
+  { name: "ERP Integration", icon: Database, path: "integration" },
 ];

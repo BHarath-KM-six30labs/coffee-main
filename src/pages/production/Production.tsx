@@ -8,6 +8,7 @@ import WastageTracking from "./WastageTracking";
 import PerformanceMetrics from "./PerformanceMetrics";
 import ERPIntegration from "./ERPIntegration";
 import { motion, AnimatePresence } from "framer-motion";
+import { InventoryView } from "../InventoryView";
 
 export default function Production() {
   const location = useLocation();
@@ -47,7 +48,7 @@ export default function Production() {
               })}
             </nav>
           </div>
-
+          
           <div className="bg-white shadow rounded-lg">
             <Routes>
               <Route path="overview" element={<StockOverview />} />
