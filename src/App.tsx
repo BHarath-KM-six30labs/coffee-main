@@ -60,16 +60,16 @@ function App() {
                 <Link to="/">HOME</Link>
               </h1>
               <div className="flex items-center space-x-4">
-                <Link to="/procurement">
+                {/* <Link to="/procurement"> */}
                   <button className="p-2 hover:bg-gray-100 rounded-full">
                     <Bell/>
                   </button>
-                </Link>
-                <Link to="/receiver">
+                {/* </Link> */}
+                {/* <Link to="/receiver"> */}
                   <button className="p-2 hover:bg-gray-100 rounded-full">
                     <User/>
                   </button>
-                </Link>
+                {/* </Link> */}
               </div>
             </div>
           </header>
